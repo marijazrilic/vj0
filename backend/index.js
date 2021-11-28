@@ -2,7 +2,7 @@
 let poruke = [
     {
       id: 1,
-      sadrzaj: 'HTML je jednostavan',
+      sadrzaj: 'HTML je kompliciran',
       vazno: true
     },
     {
@@ -18,7 +18,9 @@ let poruke = [
   ]
   
   const express = require('express')
+  const cors=require('cors')
   const app = express()
+  app.use(cors())
   app.use(express.json())
     
   app.get('/', (req, res) =>{
@@ -55,6 +57,17 @@ let poruke = [
         error: 'Nedostaje sadržaj'
       })
     }
+
+    app.put('/api/poruke/:id', (req, res) => {
+      const podatak = req.body
+      const id = Number(req.params.id)
+     
+      console.log("Promjena važnosti poruke sa ID", id)
+     
+      poruke.map(p => p.id !== id ? p : podatak)
+      res.json(podatak)
+     })
+     
     
     const poruka = {
       sadrzaj: podatak.sadrzaj,
